@@ -1,7 +1,7 @@
 
-#include<stdio.h>
 #include<iostream>
+using namespace std;
+
 int main(){
-    printf("Hello World!\n");
-    printf("this is the file I started first");
+
 }
