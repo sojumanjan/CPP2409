@@ -1,0 +1,3 @@
+git config --global user.name sojumanjan
+git config --global user.email gkfaoddl@gmail.com
+git remote add origin https://github.com/sojumanjan/CPP2409.git
