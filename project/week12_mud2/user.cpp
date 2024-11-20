@@ -11,9 +11,6 @@ void User::IncreaseHP(int inc_hp){
 int User::GetHP(){
     return hp;
 };
-void doAttack(){
-    cout << "공격합니다." << endl;
-}
 User::User(){
     hp = 20;
     itemCnt = 0;
