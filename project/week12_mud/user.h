@@ -13,3 +13,7 @@ public:
     int GetHP();
     User();
 };
+
+class Warrior : User{
+    
+};
