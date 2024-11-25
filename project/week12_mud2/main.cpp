@@ -9,7 +9,7 @@ const int Map_X = 5;
 const int map_Y = 5;
 // 사용자 정의 함수
 bool CheckXY(int user_x, int map_X, int user_y, int map_Y, string ch);
-void DisplayMap(vector<vector<int>> map, int user_x, int user_y);
+void DisplayMap(vector<vector<int>> map, int w_x, int w_y, int m_x, int m_y);
 bool CheckGoal(vector<vector<int>> map, int user_x, int user_y);
 //명령어 확인 후 움직였다면 true반환
 bool CheckMove(string ch){
@@ -32,7 +32,7 @@ int main() {
 					{3, 0, 0, 0, 2} };
 
 	user = &warrior;
-	DisplayMap(map, user->user_x, user->user_y);
+	DisplayMap(map, warrior.user_x, warrior.user_y, magician.user_x, magician.user_y);
 	cout << "HP : " << user->GetHP() << endl;
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
@@ -90,7 +90,7 @@ int main() {
 					user->IncreaseHP(2);
 					cout << "포션을 먹었습니다. HP를 2 회복합니다. " << endl;
 				}
-				DisplayMap(map, user->user_x, user->user_y);
+				DisplayMap(map, warrior.user_x, warrior.user_y, magician.user_x, magician.user_y);
 				cout << "현재 HP는 " << user->GetHP() << " 이고, 먹은 아이템은 총 " << user->itemCnt << "개 입니다." <<endl;
 				if (user->GetHP() <= 0){
 					cout << "HP가 0이하가 되었습니다. 게임을 종료합니다." << endl;
@@ -101,7 +101,7 @@ int main() {
 		//움직이지 않았다면 실행
 		else if (user_input == "map") {
 			// TODO: 지도 보여주기 함수 호출
-			DisplayMap(map, user->user_x, user->user_y);
+			DisplayMap(map, warrior.user_x, warrior.user_y, magician.user_x, magician.user_y);
 		}
 		else if (user_input == "exit") {
 			cout << "종료합니다.";
@@ -128,11 +128,23 @@ int main() {
 }
 
 // 지도와 사용자 위치 출력하는 함수
-void DisplayMap(vector<vector<int>> map, int user_x, int user_y) {
+void DisplayMap(vector<vector<int>> map, int w_x, int w_y, int m_x, int m_y) {
 	for (int i = 0; i < map_Y; i++) {
+<<<<<<< HEAD
 		for (int j = 0; j < Map_X; j++) {
 			if (i == user_y && j == user_x) {
 				cout << " USER |"; // 양 옆 1칸 공백
+=======
+		for (int j = 0; j < map_X; j++) {
+			if (i == w_x && j == w_y && j == m_x && i==m_y) {
+				cout << " Both |"; // 양 옆 1칸 공백
+			}
+			else if (i == w_x && j == w_y){
+				cout << " Warr |";
+			}
+			else if (i == m_x && j == m_y){
+				cout << " Magi |";
+>>>>>>> 1287073897d440deaaad55e76731e25e957ec8fb
 			}
 			else {
 				int pos_state = map[i][j];
