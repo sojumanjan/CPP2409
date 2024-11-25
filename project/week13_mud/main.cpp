@@ -6,9 +6,9 @@
 using namespace std;
 
 const int Map_X = 5;
-const int map_Y = 5;
+const int Map_Y = 5;
 // 사용자 정의 함수
-bool CheckXY(int user_x, int map_X, int user_y, int map_Y, string ch);
+bool CheckXY(int user_x, int user_y, string ch);
 void DisplayMap(vector<vector<int>> map, int user_x, int user_y);
 bool CheckGoal(vector<vector<int>> map, int user_x, int user_y);
 //명령어 확인 후 움직였다면 true반환
@@ -30,22 +30,23 @@ int main() {
 					{0, 0, 0, 0, 0},
 					{0, 2, 3, 0, 0},
 					{3, 0, 0, 0, 2} };
-
-	user = &warrior;
+	//직업 선택 후 상향 형변환
+	while(1){
+		cout << "직업을 선택하세요 (Warrior, Magician) : ";
+		cin >> cur_user_name;
+		if (cur_user_name == "Warrior") user = new Warrior();
+		else if (cur_user_name == "Magician") user = new Magician();
+		else{
+			cout << "잘못된 직업입니다." << endl;
+			continue;
+		}
+		break;
+	}
+	
 	DisplayMap(map, user->user_x, user->user_y);
 	cout << "HP : " << user->GetHP() << endl;
 	// 게임 시작 
 	while (1) { // 사용자에게 계속 입력받기 위해 무한 루프
-		k++;
-		if (k % 2 == 0){
-			user = &warrior;
-			cur_user_name = "Warrior";
-		}
-		else {
-			user = &magician;
-			cur_user_name = "Magician";
-		}
-		cout << "현재 차례 : "<< cur_user_name << endl;
 		// 사용자의 입력을 저장할 변수
 		string user_input = "";
 		//한글 입력시 이상하게 인식해서 영어로 바꿈.
@@ -54,7 +55,7 @@ int main() {
 		//움직였는지 확인
 		if (CheckMove(user_input) == true){
 			//만약 이동 명령어라면 XY를 체크, 매개변수로 명령어를 전달해서 XY 확인
-			if (CheckXY(user->user_x, Map_X, user->user_y, map_Y, user_input) == false){
+			if (CheckXY(user->user_x, user->user_y, user_input) == false){
 				cout << "맵을 벗어났습니다. 다시 돌아갑니다." << endl;
 				continue;
 			}
@@ -129,7 +130,7 @@ int main() {
 
 // 지도와 사용자 위치 출력하는 함수
 void DisplayMap(vector<vector<int>> map, int user_x, int user_y) {
-	for (int i = 0; i < map_Y; i++) {
+	for (int i = 0; i < Map_Y; i++) {
 		for (int j = 0; j < Map_X; j++) {
 			if (i == user_y && j == user_x) {
 				cout << " USER |"; // 양 옆 1칸 공백
@@ -161,7 +162,7 @@ void DisplayMap(vector<vector<int>> map, int user_x, int user_y) {
 }
 
 // 이동하려는 곳이 유효한 좌표인지 체크하는 함수 (매개변수 추가 - 유저 명령어)
-bool CheckXY(int user_x, int mapX, int user_y, int mapY, string user_input) {
+bool CheckXY(int user_x, int user_y, string user_input) {
 	bool checkFlag = false;
 	if (user_input == "up")
 		user_y--;
@@ -171,7 +172,7 @@ bool CheckXY(int user_x, int mapX, int user_y, int mapY, string user_input) {
 		user_x--;
 	else if (user_input == "right")
 		user_x++;
-	if (user_x >= 0 && user_x < mapX && user_y >= 0 && user_y < mapY) {
+	if (user_x >= 0 && user_x < Map_X && user_y >= 0 && user_y < Map_Y) {
 		checkFlag = true;
 	}
 	return checkFlag;
