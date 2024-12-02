@@ -10,8 +10,8 @@ const int map_x = 5;
 const int map_y = 5;
 // 사용자 정의 함수
 bool CheckXY(int user_x, int user_y, string ch);
-void DisplayMap(vector<vector<int>> map, int user_x, int user_y);
-bool CheckGoal(vector<vector<int>> map, int user_x, int user_y);
+void DisplayMap(int map[map_x][map_y], int user_x, int user_y);
+bool CheckGoal(int map[map_x][map_y], int user_x, int user_y);
 //명령어 확인 후 움직였다면 true반환
 bool CheckMove(string ch){
 	return (ch == "up" || ch == "down" || ch == "left" || ch == "right");
@@ -24,11 +24,12 @@ int main() {
 	ifstream is("map.txt");
 	int index;
 	
+	//map.txt 파일에서 내용을 불러와 맵 구성
 	// 0은 빈 공간, 1은 아이템, 2는 적, 3은 포션, 4는 목적지
 	int map[map_x][map_y];
 	for (int i = 0; i < map_y ; i++){
-		while (is >> index){
-			
+		for (int j = 0; j < map_x; j++){
+			is >> map[i][j];
 		}
 	}
 	//직업 선택 후 상향 형변환
