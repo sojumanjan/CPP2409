@@ -66,6 +66,7 @@
         "numeric": "cpp",
         "optional": "cpp",
         "random": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "fstream": "cpp"
     }
 }

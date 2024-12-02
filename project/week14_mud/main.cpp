@@ -2,11 +2,12 @@
 #include <string>
 #include <vector>
 #include "user.h"
+#include<fstream>
 
 using namespace std;
 
-const int Map_X = 5;
-const int Map_Y = 5;
+const int map_x = 5;
+const int map_y = 5;
 // 사용자 정의 함수
 bool CheckXY(int user_x, int user_y, string ch);
 void DisplayMap(vector<vector<int>> map, int user_x, int user_y);
@@ -19,26 +20,32 @@ bool CheckMove(string ch){
 // 메인  함수
 int main() {
     User *user;
-	//유저 턴을 바꾸기 위한 변수
-	int k = 0;
 	string cur_user_name;
+	ifstream is("map.txt");
+	int index;
+	
 	// 0은 빈 공간, 1은 아이템, 2는 적, 3은 포션, 4는 목적지
-	vector<vector<int>> map = { {0, 1, 2, 0, 4},
-					{1, 0, 0, 2, 0},
-					{0, 0, 0, 0, 0},
-					{0, 2, 3, 0, 0},
-					{3, 0, 0, 0, 2} };
+	int map[map_x][map_y];
+	for (int i = 0; i < map_y ; i++){
+		while (is >> index){
+			
+		}
+	}
 	//직업 선택 후 상향 형변환
 	while(1){
-		cout << "직업을 선택하세요 (Warrior, Magician) : ";
-		cin >> cur_user_name;
-		if (cur_user_name == "Warrior") user = new Warrior();
-		else if (cur_user_name == "Magician") user = new Magician();
-		else{
-			cout << "잘못된 직업입니다." << endl;
+		//입력 예외 처리
+		try{
+			cout << "직업을 선택하세요 (Warrior, Magician) : ";
+			cin >> cur_user_name;
+			if (cur_user_name == "Warrior") user = new Warrior();
+			else if (cur_user_name == "Magician") user = new Magician();
+			else throw cur_user_name;
+			break;
+		}
+		catch(string e){
+			cout << "잘못된 직업입니다. 다시 입력하세요." << endl;
 			continue;
 		}
-		break;
 	}
 	
 	DisplayMap(map, user->user_x, user->user_y);
@@ -127,9 +134,9 @@ int main() {
 }
 
 // 지도와 사용자 위치 출력하는 함수
-void DisplayMap(vector<vector<int>> map, int user_x, int user_y) {
-	for (int i = 0; i < Map_Y; i++) {
-		for (int j = 0; j < Map_X; j++) {
+void DisplayMap(int map[map_x][map_y], int user_x, int user_y) {
+	for (int i = 0; i < map_y; i++) {
+		for (int j = 0; j < map_x; j++) {
 			if (i == user_y && j == user_x) {
 				cout << " USER |"; // 양 옆 1칸 공백
 			}
@@ -170,14 +177,14 @@ bool CheckXY(int user_x, int user_y, string user_input) {
 		user_x--;
 	else if (user_input == "right")
 		user_x++;
-	if (user_x >= 0 && user_x < Map_X && user_y >= 0 && user_y < Map_Y) {
+	if (user_x >= 0 && user_x < map_x && user_y >= 0 && user_y < map_y) {
 		checkFlag = true;
 	}
 	return checkFlag;
 }
 
 // 유저의 위치가 목적지인지 체크하는 함수
-bool CheckGoal(vector<vector<int>> map, int user_x, int user_y) {
+bool CheckGoal(int map[map_x][map_y], int user_x, int user_y) {
 	// 목적지 도착하면
 	if (map[user_y][user_x] == 4) {
 		return true;
